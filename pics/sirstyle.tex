@@ -1,0 +1,25 @@
+% Shared pgfplots styles for the numerical study.
+% All figures read the tables written by python/experiments into pics/data/.
+\pgfplotsset{
+    sirbase/.style={
+        width=0.37\textwidth,
+        height=0.30\textwidth,
+        scale only axis,
+        tick label style={font=\scriptsize},
+        label style={font=\small},
+        title style={font=\small},
+        legend style={font=\scriptsize, draw=none, fill=none,
+                      cells={anchor=west}, inner sep=1pt},
+        every axis plot/.append style={line width=0.8pt},
+        grid=major,
+        grid style={lightgray!40, line width=0.3pt},
+        axis line style={lightgray!80!black},
+    },
+    sirS/.style={color=mycolor4},              % susceptible  (blue)
+    sirI/.style={color=mycolor1},              % infectious   (orange)
+    sirR/.style={color=mycolor3},              % removed      (green)
+    sirN/.style={color=black},                 % total population
+    sirTheory/.style={color=mycolor5, dashed}, % published bound
+    sirSharp/.style={color=mycolor2, dashed, line width=1.3pt},
+    sirData/.style={only marks, mark=*, mark size=0.6pt, color=mycolor0},
+}

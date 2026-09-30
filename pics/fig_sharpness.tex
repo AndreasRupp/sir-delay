@@ -1,0 +1,44 @@
+% Experiment 1b/1d: the true positivity boundary against the sufficient conditions.
+% The measured curves are drawn first so that the two reference curves stay
+% visible where the measured boundary settles exactly on top of them.
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1, horizontal sep=2.0cm},
+    sirbase, xmode=log, ymode=log,
+]
+\nextgroupplot[
+    xlabel={transmission rate $\beta$},
+    ylabel={critical history level $\bar N_0$},
+    legend pos=north east,
+    legend style={fill=white, fill opacity=0.85, text opacity=1},
+]
+\addplot[color=mycolor0]  table[x=beta, y=crit0p1] {pics/data/exp1b_boundary.dat};
+\addlegendentry{measured, $\tau=0.1$}
+\addplot[color=mycolor3]  table[x=beta, y=crit1]   {pics/data/exp1b_boundary.dat};
+\addlegendentry{measured, $\tau=1$}
+\addplot[color=mycolor4]  table[x=beta, y=crit10]  {pics/data/exp1b_boundary.dat};
+\addlegendentry{measured, $\tau=10$}
+%\addplot[color=mycolor4, densely dashdotted]
+%    table[x=beta, y=crit100] {pics/data/exp1b_boundary.dat};
+%\addlegendentry{measured, $\tau=100$}
+\addplot[sirSharp]   table[x=beta, y=thm]   {pics/data/exp1b_boundary.dat};
+\addlegendentry{$2\sqrt{\Lambda/\beta}$ (\Cref{thm:positivity})}
+
+\nextgroupplot[
+    xlabel={delay $\tau$}, 
+    ylabel={critical history level $\bar N_0$},
+    ymode=normal,
+    xmin=0.1,
+    xmax=100,
+    ymin=1.8, 
+    ymax=8, 
+    legend pos=north east,
+    legend style={fill=white, fill opacity=0.85, text opacity=1},
+]
+\addplot[color=mycolor1, mark=*, mark size=1.5pt]
+    table[x=tau, y=crit]  {pics/data/exp1d_tau.dat};
+\addlegendentry{measured, $\beta=0.8$}
+\addplot[sirSharp]  table[x=tau, y=thm] {pics/data/exp1d_tau.dat};
+\addlegendentry{$2\sqrt{\Lambda/\beta}$ (\Cref{thm:positivity})}
+\end{groupplot}
+\end{tikzpicture}

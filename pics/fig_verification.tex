@@ -1,0 +1,38 @@
+% Experiment 0.2 and 4a: convergence in the step size and in the delay.
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1, horizontal sep=2.0cm},
+    sirbase, xmode=log, ymode=log,
+]
+\nextgroupplot[
+    xlabel={step size $h$}, 
+    ylabel={error at $t=T$},
+    xmin = 6e-4,
+    xmax = 4,
+    ymin = 2e-6,
+    ymax = 0.098,
+    legend pos=north west,
+]
+\addplot[color=mycolor4, mark=*, mark size=2.2pt]
+    table[x=h, y=error] {pics/data/exp0_convergence_academic.dat};
+\addlegendentry{sub-critical set, $\tau=1$}
+\addplot[color=mycolor1, mark=square*, mark size=2.2pt]
+    table[x=h, y=error] {pics/data/exp0_convergence_covid.dat};
+\addlegendentry{COVID-19 set, $\tau=5$}
+\addplot[sirTheory, domain=1e-3:1, samples=2, forget plot] {0.01*x};
+\node[font=\scriptsize, anchor=west, mycolor5] at (axis cs:1,1e-2) {$\mathcal{O}(h)$};
+
+\nextgroupplot[
+    xlabel={delay $\tau$}, 
+    %ylabel={distance to delay-free model},
+    ylabel={$\|u_\tau(T)-u_0(T)\|_\infty$},
+    legend pos=north west,
+]
+\addplot[color=mycolor4, mark=triangle*, mark size=2.8pt]
+    table[x=tau, y=error] {pics/data/exp4a_taulimit.dat};
+%\addlegendentry{$\|u_\tau(T)-u_0(T)\|_\infty$}
+\addplot[sirTheory, domain=3.5e-3:0.1, samples=2, forget plot] {2e-3*x};
+\node[font=\scriptsize, anchor=south east, mycolor5] at (axis cs:0.1,1.8e-4)
+    {$\mathcal{O}(\tau)$};
+\end{groupplot}
+\end{tikzpicture}

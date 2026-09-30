@@ -1,0 +1,45 @@
+% Experiment 3c: the piecewise-constant beta(t) fits to the Italian incidence.
+% Thick curves: model incidence; thin curves with marks: the same centred 7-day
+% mean as for the data, applied to the model incidence.
+\begin{tikzpicture}
+\begin{groupplot}[
+    %group style={group size=2 by 1, horizontal sep=1.5cm},
+    sirbase,
+    width=0.7\textwidth,
+]
+\nextgroupplot[
+    xlabel={days after 24 February 2020}, ylabel={daily incidence [density]},
+    ymode=log, xmin=0, xmax=70, ymin=8e-7, ymax=6e-4,
+    legend columns=2,
+    legend style={at={(0.5,-0.2)}, anchor=north,
+                  /tikz/every even column/.append style={column sep=10pt}},
+]
+\addplot[sirSharp, forget plot] coordinates {(14,8e-7) (14,6e-4)};
+\addplot[sirData, mark size=1.4pt]
+    table[x=day, y=data] {pics/data/exp3c_fits.dat};
+\addlegendentry{reported (7-day mean)}
+\addlegendimage{empty legend}
+\addlegendentry{}
+\addplot[color=mycolor4, line width=1.5pt, densely dashed]
+    table[x=day, y=ode] {pics/data/exp3c_fits.dat};
+\addlegendentry{no delay, $t_0=\expThreeTzeroOde$}
+\addplot[color=mycolor4, line width=0.6pt, mark=square*, mark size=1pt]
+    table[x=day, y=ode_avg] {pics/data/exp3c_fits.dat};
+\addlegendentry{no delay, 7-day mean}
+\addplot[color=mycolor1, line width=1.5pt]
+    table[x=day, y=delay] {pics/data/exp3c_fits.dat};
+\addlegendentry{delay, fitted $t_0$}
+\addplot[color=mycolor1, line width=0.6pt, mark=*, mark size=1pt]
+    table[x=day, y=delay_avg] {pics/data/exp3c_fits.dat};
+\addlegendentry{delay, fitted $t_0$, 7-day mean}
+\addplot[color=mycolor3, line width=1.5pt, densely dashdotted]
+    table[x=day, y=lock] {pics/data/exp3c_fits.dat};
+\addlegendentry{delay, $t_0$ = lockdown}
+\addplot[color=mycolor3, line width=0.6pt, mark=triangle*, mark size=1pt]
+    table[x=day, y=lock_avg] {pics/data/exp3c_fits.dat};
+\addlegendentry{delay, $t_0$ = lockdown, 7-day mean}
+\node[font=\scriptsize, mycolor2, anchor=south west, rotate=90] at (axis cs:17.3,9e-7)
+    {lockdown, 9 Mar};
+
+\end{groupplot}
+\end{tikzpicture}

@@ -1,0 +1,88 @@
+% Standalone document that typesets the five figures of the numerical study
+% (Section 4 of "Positivity of an SIR model with delay") from the tables in
+% pics/data/.  Build from the repository root with
+%
+%     latexmk -pdf figures.tex        (or: pdflatex figures.tex)
+%
+% after regenerating the data with  python -m experiments.run_all  (run inside
+% python/).  The figure sources pics/fig_*.tex are identical to the ones
+% included by the manuscript.
+\documentclass[a4paper]{article}
+\usepackage{a4wide}
+\usepackage{xcolor}
+\usepackage{amssymb,amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots,fillbetween}
+
+% Colours used by pics/sirstyle.tex (copied from the manuscript's def.tex).
+\definecolor{lightgray}{RGB}{175,175,175}
+\definecolor{mycolor0}{rgb}{0.66,0.66,0.66}% grey
+\definecolor{mycolor4}{rgb}{0.00000,0.44700,0.74100}% blue
+\definecolor{mycolor1}{rgb}{0.85000,0.32500,0.09800}% orange
+\definecolor{mycolor2}{rgb}{0.92900,0.69400,0.12500}% yellow
+\definecolor{mycolor3}{rgb}{0.67000,0.74700,0.14100}% green
+\definecolor{mycolor5}{rgb}{0.49400,0.18400,0.55600}% violet
+
+\newcommand{\calR}{\mathcal{R}}
+
+% The legends cross-reference the manuscript; resolve those references to the
+% numbers they carry there instead of loading cleveref.
+\makeatletter
+\newcommand{\Cref}[1]{\@ifundefined{sirref@#1}{#1}{\@nameuse{sirref@#1}}}
+\@namedef{sirref@thm:positivity}{Theorem~2}
+\@namedef{sirref@tab:params}{Table~1}
+\makeatother
+
+\input{pics/sirstyle}
+\input{pics/data/exp0_macros}
+\input{pics/data/exp1_macros}
+\input{pics/data/exp2_macros}
+\input{pics/data/exp3_macros}
+\input{pics/data/exp4_macros}
+
+\begin{document}
+
+\begin{figure}[p]
+	\centering
+	\input{pics/fig_verification.tex}
+	\caption{(Manuscript Figure~1.) Left: first-order convergence, error at
+	$t=T$ against the step size~$h$. Right: distance to the solution of the
+	delay-free model as $\tau\to0$.}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\input{pics/fig_sharpness.tex}
+	\caption{(Manuscript Figure~2.) Sharpness of the history condition. Left:
+	measured critical history level $\bar N_0$ against $\beta$ for three
+	delays. Right: the same threshold as a function of $\tau$ at $\beta=0.8$.}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\input{pics/fig_delay_matters.tex}
+	\caption{(Manuscript Figure~3.) Effect of the delay at fixed
+	$\calR_0 = \expTwoRZero$. Left: prevalence for several delays. Right: a
+	delay-free model calibrated on the shaded window to data generated with
+	$\tau=10$.}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\input{pics/fig_positivity_realistic.tex}
+	\caption{(Manuscript Figure~4.) Left: minimum of $S$ against the delay for
+	the two parameter sets of Table~1. Right: delay-induced oscillations for
+	the super-critical dimensionless set.}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\input{pics/fig_changepoint.tex}
+	\caption{(Manuscript Figure~5.) Reported Italian daily incidence
+	(seven-day mean) and piecewise-constant $\beta(t-\tau)$ fits with a fitted
+	change point and with the change point pinned to the lockdown.}
+\end{figure}
+
+\end{document}

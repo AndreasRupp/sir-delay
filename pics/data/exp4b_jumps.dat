@@ -1,0 +1,8 @@
+# Experiment 4b -- magnitude of the jump in the k-th derivative
+# of I at t = j*tau, one-sided second-order differences,
+# h = tau/8192.
+j k1 k2 k3
+0 0.05199619141 0.06239085644 0.07482910156
+1 1.342721475e-06 0.02199391276 0.04280471802
+2 5.684341886e-14 1.912936568e-06 0.01567268372
+3 2.842170943e-14 2.328306437e-09 4.196166992e-05

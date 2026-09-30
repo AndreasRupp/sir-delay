@@ -1,0 +1,39 @@
+% Experiment 2a/2b: identical R_0, different delay; and the calibration mismatch.
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1, horizontal sep=2.0cm},
+    sirbase,
+]
+\nextgroupplot[
+    xlabel={time $t$ [days]}, ylabel={infectious $I(t)$},
+    xmin=0, xmax=800, legend pos=north east,
+]
+\addplot[color=mycolor4] table[x=t, y=I0]  {pics/data/exp2a_delays.dat};
+\addlegendentry{$\tau=0$}
+\addplot[color=mycolor3] table[x=t, y=I5]  {pics/data/exp2a_delays.dat};
+\addlegendentry{$\tau=5$}
+\addplot[color=mycolor1] table[x=t, y=I10] {pics/data/exp2a_delays.dat};
+\addlegendentry{$\tau=10$}
+\addplot[color=mycolor5] table[x=t, y=I20] {pics/data/exp2a_delays.dat};
+\addlegendentry{$\tau=20$}
+\addplot[color=mycolor2] table[x=t, y=I30] {pics/data/exp2a_delays.dat};
+\addlegendentry{$\tau=30$}
+
+\nextgroupplot[
+    xlabel={time $t$ [days]}, ylabel={infectious $I(t)$}, ymode=log,
+    xmin=0, xmax=800, ymin=5e-7, ymax=0.95, legend pos=north west,
+    legend style={fill=white, fill opacity=0.85, text opacity=1},
+]
+% calibration window, shaded
+\addplot[draw=none, fill=mycolor0!25, forget plot] coordinates
+    {(\expTwoWinLo,1e-7) (\expTwoWinHi,1e-7) (\expTwoWinHi,0.3) (\expTwoWinLo,0.3)}
+    \closedcycle;
+\addplot[color=mycolor1] table[x=t, y=Itrue]  {pics/data/exp2b_mismatch.dat};
+\addlegendentry{delay model, truth}
+\addplot[color=mycolor4, densely dashed]
+    table[x=t, y=Inaive] {pics/data/exp2b_mismatch.dat};
+\addlegendentry{delay-free fit}
+\node[font=\scriptsize, anchor=south west, align=left]
+    at (axis cs:105,1e-6) {calibration\\ window};
+\end{groupplot}
+\end{tikzpicture}
